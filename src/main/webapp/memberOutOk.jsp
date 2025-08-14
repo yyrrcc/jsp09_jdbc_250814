@@ -40,6 +40,7 @@
 		// get메서드가 url, username, password 이용해서 db와 연결시켜줌
 		stmt = conn.createStatement(); // stmt 객체 생성
 		
+		// update, delete .. 등 할 때는 executeUpdate 메서드 이용
 		int sqlResult = stmt.executeUpdate(sql); // SQL문을 DB에서 실행, 성공하면 1 반환
 		System.out.println("sqlResult :" + sqlResult);
 			if (sqlResult == 1) {
