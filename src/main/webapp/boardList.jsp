@@ -26,7 +26,7 @@
 		String username = "root";
 		String password = "12345";
 		
-		String sql = "SELECT * FROM board"; // 모든 글 리스트 반환
+		String sql = "SELECT * FROM board ORDER BY bnum DESC"; // 모든 글 리스트 반환 + 최신글이 맨 위로
 		
 		Connection conn = null; 
 		Statement stmt = null;
@@ -84,6 +84,17 @@
 			}
 		}
 	%>
+	
+	<%
+		// 글 쓰자마자 게시판 목록으로 이동
+		
+		request.setAttribute("boardList", boardList);		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("boardListStyle.jsp");
+		dispatcher.forward(request, response);
+
+	%>
+	
+	
 
 
 </body>

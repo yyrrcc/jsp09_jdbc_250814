@@ -1,4 +1,3 @@
-<%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
@@ -28,39 +27,36 @@
 		String password = "12345";
 		
 		// SQL문 만들기 (예약어는 대문자로 써주는 게 관례)
-		String sql = "SELECT * FROM members WHERE memid = ?";
-
+		String sql = "SELECT * FROM members WHERE memid = '"+ sid +"'";
 		
-		Connection conn = null;
-		PreparedStatement pstmt = null; // pstmt 생성
-		ResultSet rs = null; 
+		Connection conn = null; // 커넥션 인터페이스로 선언 후 null로 초기값 선언
+		Statement stmt = null;
+		ResultSet rs = null; // 바깥에 선언해줘야 try catch문에서도 사용 가능, select문 실행 시 db에게 반환해주는 결과 받아주는 객체
 		
-
+		// DB 연동할 때 예외처리 필수
 		try {
 			Class.forName(driverName); // mysql Driver 불러오기
 			conn = DriverManager.getConnection(url, username, password);
+			// 커넥션이 메모리 생성 (DB와 연결 커넥션 conn 생성)
+			// get메서드가 url, username, password 이용해서 db와 연결시켜줌
+			stmt = conn.createStatement(); // stmt 객체 생성
+			
+			rs = stmt.executeQuery(sql); // select문은 executeQuery 사용함! 
+			// select 문 실행 -> 결과가 DB로부터 반환 -> 그 결과(행)을 받아주는 ResultSet 타입 객체로 받아야 함
+		
 
-			pstmt = conn.prepareStatement(sql); // pstmt 객체 생성
-			
-			// ? 값 넣어주기
-			pstmt.setString(1, sid);
-			
-			rs = pstmt.executeQuery(); 
-			
-			if (rs.next()) {
-				do { // rs에서 레코드(행)을 추출하는 방법
-					String id = rs.getString("memid");
-					String pw = rs.getString("mempw");
-					String name = rs.getString("memname");
-					String email = rs.getString("mememail");
-					String date = rs.getString("memdate");
-					
-					out.println("********조회된 회원 정보 <br>");
-					out.println(id + " / " + pw + " / " + name + " / " + email + " / " + date + "<br>");
-			} while (rs.next());
-			} else { //거짓이면 레코드가 0개->아이디 존재하지 않음
-				out.println("존재하지 않는 회원입니다.");	
-			}
+			// 2. while로
+			while (rs.next()) { // rs에서 레코드(행)을 추출하는 방법
+				String id = rs.getString("memid");
+				String pw = rs.getString("mempw");
+				String name = rs.getString("memname");
+				String email = rs.getString("mememail");
+				String date = rs.getString("memdate");
+				
+				out.println("********조회된 회원 정보 <br>");
+				out.println(id + " / " + pw + " / " + name + " / " + email + " / " + date);
+			} 
+
 					
 		} catch (Exception e) {
 			out.println("DB 에러 발생");
@@ -70,8 +66,8 @@
 				if (rs != null) {
 					rs.close();
 				}
-				if (pstmt != null) { // stmt 존재하면 닫아주기 (conn보다 먼저 실행되어야 함)
-					pstmt.close();
+				if (stmt != null) { // stmt 존재하면 닫아주기 (conn보다 먼저 실행되어야 함)
+					stmt.close();
 				}
 				if (conn != null) { // Connection이 null이 아닌 경우 (존재하는 경우) 닫기
 					conn.close();

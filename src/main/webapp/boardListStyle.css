@@ -1,0 +1,231 @@
+@charset "UTF-8";
+
+/* 기본 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Malgun Gothic', '맑은 고딕', Arial, sans-serif;
+    background-color: #f5f5f5;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    overflow: hidden;
+}
+
+/* 헤더 */
+.header {
+    background-color: white;
+    padding: 30px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.header h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.board-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.board-info span {
+    color: #666;
+    font-size: 14px;
+}
+
+.board-info strong {
+    color: #007bff;
+}
+
+/* 버튼 */
+.btn-write {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.btn-write:hover {
+    background-color: #0056b3;
+}
+
+/* 테이블 */
+.board-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+/* 테이블 헤더 */
+.board-table thead {
+    background-color: #f8f9fa;
+}
+
+.board-table th {
+    padding: 15px 12px;
+    text-align: center;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #dee2e6;
+    font-size: 14px;
+}
+
+/* 테이블 바디 */
+.board-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e9ecef;
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+}
+
+/* 컬럼 너비 */
+.col-num { width: 10%; }
+.col-title { width: 25%; }
+.col-content { width: 30%; }
+.col-author { width: 15%; }
+.col-date { width: 25%; }
+
+/* 행 스타일 */
+.board-row {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.board-row:hover {
+    background-color: #f8f9fa;
+}
+
+.board-row:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.board-row:nth-child(even):hover {
+    background-color: #f0f0f0;
+}
+
+/* 제목 스타일 */
+.title {
+    text-align: left !important;
+    font-weight: 500;
+    color: #333;
+}
+
+/* 번호 스타일 */
+.num {
+    font-weight: 600;
+    color: #666;
+}
+
+/* 내용 스타일 */
+.content {
+    color: #888;
+}
+
+/* 작성자 스타일 */
+.author {
+    color: #666;
+}
+
+/* 날짜 스타일 */
+.date {
+    color: #888;
+    font-size: 13px;
+}
+
+/* 데이터 없음 */
+.no-data {
+    padding: 40px !important;
+    color: #999;
+    font-size: 16px;
+    text-align: center !important;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        border-radius: 4px;
+    }
+    
+    .header {
+        padding: 20px;
+    }
+    
+    .header h1 {
+        font-size: 20px;
+    }
+    
+    .board-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .board-table th,
+    .board-table td {
+        padding: 10px 8px;
+        font-size: 13px;
+    }
+    
+    .col-num { width: 15%; }
+    .col-title { width: 25%; }
+    .col-content { width: 30%; }
+    .col-author { width: 20%; }
+    .col-date { width: 25%; }
+}
+
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 18px;
+    }
+    
+    .board-table th,
+    .board-table td {
+        padding: 8px 5px;
+        font-size: 12px;
+    }
+    
+    .btn-write {
+        padding: 6px 15px;
+        font-size: 13px;
+    }
+}
+
+/* 테이블 경계선 */
+.board-table {
+    border: 1px solid #dee2e6;
+}
+
+.board-table th:not(:last-child),
+.board-table td:not(:last-child) {
+    border-right: 1px solid #e9ecef;
+}
+
+/* 포커스 효과 */
+.board-row:focus {
+    outline: 2px solid #007bff;
+    outline-offset: -2px;
+}
